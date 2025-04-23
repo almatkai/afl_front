@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/matches_list.dart';
 
 class LeagueHomePage extends StatefulWidget {
-  const LeagueHomePage({Key? key}) : super(key: key);
+  const LeagueHomePage({super.key});
 
   @override
   State<LeagueHomePage> createState() => _LeagueHomePageState();

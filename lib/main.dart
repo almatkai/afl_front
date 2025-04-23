@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'screens/league_home_page.dart';
 
 void main() {

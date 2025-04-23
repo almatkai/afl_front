@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MatchesList extends StatelessWidget {
-  MatchesList({Key? key}) : super(key: key);
+  MatchesList({super.key});
 
   final List<Map<String, dynamic>> leagues = [
     {
@@ -119,7 +119,7 @@ class MatchesList extends StatelessWidget {
                   ),
                 ),
               );
-            }).toList(),
+            }),
           ],
         );
       },
