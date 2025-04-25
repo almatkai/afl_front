@@ -8,24 +8,23 @@ class MatchesList extends StatelessWidget {
       'name': 'ПРЕМЬЕР-ЛИГА',
       'date': '20 апр.',
       'matches': [
-        {'team1': 'Коктем', 'team2': '', 'time': '18:00'},
-        {'team1': 'Елорда', 'team2': '', 'time': '18:00'},
-        {'team1': 'Астана-Ветераны', 'team2': '', 'time': '18:00'},
-        {'team1': 'Целинник', 'team2': '', 'time': '18:00'},
-        {'team1': 'Мотор', 'team2': '', 'time': '18:00'},
-        {'team1': 'Караганда', 'team2': '', 'time': '18:00'},
-        {'team1': 'Приозерье', 'team2': '', 'time': '18:00'},
+        {'team1': 'Abyroi School', 'team2': 'FC SEMEY', 'time': '18:00'},
+        {'team1': 'Pioneer Group', 'team2': 'QAISAR PLAZA', 'time': '18:00'},
+        {'team1': 'Alash', 'team2': 'FC KUNTU', 'time': '18:00'},
+        {'team1': 'FC Suranshy Batyr', 'team2': 'Пионер элит', 'time': '18:00'},
+        {'team1': 'FC Займер', 'team2': 'FC BAKANAS', 'time': '18:00'},
+        {'team1': 'Университет Туран', 'team2': 'FC FARES', 'time': '18:00'},
       ]
     },
     {
       'name': 'ЛИГА А',
       'date': '20 апр.',
       'matches': [
-        {'team1': 'Кокшетау', 'team2': '', 'time': '18:00'},
-        {'team1': 'Атамекен', 'team2': '', 'time': '18:00'},
-        {'team1': 'Продинвест', 'team2': '', 'time': '18:00'},
-        {'team1': 'Байлис', 'team2': '', 'time': '18:00'},
-        {'team1': 'Буревестник', 'team2': '', 'time': '18:00'},
+        {'team1': 'Кокшетау', 'team2': 'Динамо', 'time': '18:00'},
+        {'team1': 'Атамекен', 'team2': 'Астана', 'time': '18:00'},
+        {'team1': 'Продинвест', 'team2': 'Дала Кырандары', 'time': '18:00'},
+        {'team1': 'Байлис', 'team2': 'Zhas Alash', 'time': '18:00'},
+        {'team1': 'Буревестник', 'team2': 'Semey Team', 'time': '18:00'},
       ]
     },
     {
@@ -33,7 +32,7 @@ class MatchesList extends StatelessWidget {
       'date': '',
       'matches': [
         {'team1': 'Экскаваторщик', 'team2': '', 'time': '18:00'},
-        {'team1': 'Омак-Астана', 'team2': '', 'time': '18:00'},
+        {'team1': 'Омак', 'team2': 'Астана', 'time': '18:00'},
       ]
     },
   ];
@@ -91,7 +90,7 @@ class MatchesList extends StatelessWidget {
                 child: ListTile(
                   leading: const Icon(Icons.star_border, color: Colors.grey),
                   title: Text(
-                    match['team1'],
+                    '${match['team1']} - ${match['team2']}',
                     style: const TextStyle(
                       fontSize: 14,
                     ),
