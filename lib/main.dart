@@ -19,8 +19,7 @@ class MainApp extends StatelessWidget {
           backgroundColor: Color(0xFF0A3441),
         ),
       ),
-      home: const LeagueHomePage(),
+      home: const LeagueHomePage(categories: ['МАТЧИ', 'НОВОСТИ', 'ТУРНИРЫ', 'КОМАНДЫ']),
     );
   }
 }
-

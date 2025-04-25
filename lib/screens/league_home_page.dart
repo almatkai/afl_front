@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import '../widgets/matches_list.dart';
+import 'news_page.dart';
+import 'tournaments_page.dart';
 
 class LeagueHomePage extends StatefulWidget {
-  const LeagueHomePage({super.key});
+  final List<String> categories;
+  const LeagueHomePage({super.key, required this.categories});
 
   @override
   State<LeagueHomePage> createState() => _LeagueHomePageState();
 }
 
 class _LeagueHomePageState extends State<LeagueHomePage> {
-  final List<String> categories = ['МАТЧИ', 'НОВОСТИ', 'ТУРНИРЫ', 'КОМАНДЫ'];
   final List<String> filters = ['ВСЕ', 'ЛИГА', 'ЗАВЕРШЕННЫЕ', 'РАСПИСАНИЕ'];
 
   String selectedCategory = 'МАТЧИ';
@@ -118,7 +120,7 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: categories.map((category) {
+              children: widget.categories.map((category) {
                 bool isSelected = category == selectedCategory;
                 return GestureDetector(
                   onTap: () {
@@ -149,90 +151,40 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
             ),
           ),
 
-          // Filter tabs with animated red box and dynamic text color
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final filterCount = filters.length;
-                final filterWidth = constraints.maxWidth / filterCount;
-                final selectedIndex = filters.indexOf(selectedFilter);
+          if (selectedCategory == 'МАТЧИ')
+            // Filter tabs with animated red box and dynamic text color
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final filterCount = filters.length;
+                  final filterWidth = constraints.maxWidth / filterCount;
+                  final selectedIndex = filters.indexOf(selectedFilter);
 
-                return TweenAnimationBuilder<double>(
-                  tween: Tween(end: selectedIndex * filterWidth),
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  builder: (context, animatedLeft, child) {
-                    return Stack(
-                      children: [
-                        // Animated red box
-                        Positioned(
-                          left: animatedLeft,
-                          top: 0,
-                          bottom: 0,
-                          width: filterWidth,
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(20),
+                  return TweenAnimationBuilder<double>(
+                    tween: Tween(end: selectedIndex * filterWidth),
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    builder: (context, animatedLeft, child) {
+                      return Stack(
+                        children: [
+                          // Animated red box
+                          Positioned(
+                            left: animatedLeft,
+                            top: 0,
+                            bottom: 0,
+                            width: filterWidth,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                             ),
                           ),
-                        ),
-                        // Gray text layer
-                        Row(
-                          children: filters.map((filter) {
-                            return Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    selectedFilter = filter;
-                                  });
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 12),
-                                  child: Text(
-                                    filter,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                        // White text layer with ShaderMask
-                        ShaderMask(
-                          shaderCallback: (bounds) {
-                            final totalWidth = constraints.maxWidth;
-                            final start = (animatedLeft + 4) / totalWidth; // Account for margin
-                            final end = (animatedLeft + filterWidth - 4) / totalWidth; // Account for margin
-                            return LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: const [
-                                Colors.transparent,
-                                Colors.white,
-                                Colors.white,
-                                Colors.transparent,
-                              ],
-                              stops: [
-                                start - 0.05 > 0 ? start - 0.05 : 0.0,
-                                start,
-                                end,
-                                end + 0.05 < 1 ? end + 0.05 : 1.0,
-                              ],
-                            ).createShader(bounds);
-                          },
-                          blendMode: BlendMode.srcIn,
-                          child: Row(
+                          // Gray text layer
+                          Row(
                             children: filters.map((filter) {
                               return Expanded(
                                 child: GestureDetector(
@@ -249,7 +201,7 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
                                       filter,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.grey,
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
                                       ),
@@ -259,18 +211,84 @@ class _LeagueHomePageState extends State<LeagueHomePage> {
                               );
                             }).toList(),
                           ),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                          // White text layer with ShaderMask
+                          ShaderMask(
+                            shaderCallback: (bounds) {
+                              final totalWidth = constraints.maxWidth;
+                              final start = (animatedLeft + 4) / totalWidth; // Account for margin
+                              final end = (animatedLeft + filterWidth - 4) / totalWidth; // Account for margin
+                              return LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: const [
+                                  Colors.transparent,
+                                  Colors.white,
+                                  Colors.white,
+                                  Colors.transparent,
+                                ],
+                                stops: [
+                                  start - 0.05 > 0 ? start - 0.05 : 0.0,
+                                  start,
+                                  end,
+                                  end + 0.05 < 1 ? end + 0.05 : 1.0,
+                                ],
+                              ).createShader(bounds);
+                            },
+                            blendMode: BlendMode.srcIn,
+                            child: Row(
+                              children: filters.map((filter) {
+                                return Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedFilter = filter;
+                                      });
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 12),
+                                      child: Text(
+                                        filter,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+
+          // Display content based on selected category
+          Expanded(
+            child: Builder(
+              builder: (context) {
+                switch(selectedCategory) {
+                  case 'МАТЧИ':
+                    return MatchesList(selectedFilter: selectedFilter);
+                  case 'НОВОСТИ':
+                    return NewsPage();
+                  case 'ТУРНИРЫ':
+                    return TournamentsPage();
+                  case 'КОМАНДЫ':
+                    return const Center(child: Text('Команды', style: TextStyle(fontSize: 24)));
+                  default:
+                    return MatchesList(selectedFilter: selectedFilter);
+                }
               },
             ),
-          ),
-
-          // Match list
-          Expanded(
-            child: MatchesList(),
           ),
         ],
       ),
